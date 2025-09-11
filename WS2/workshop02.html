@@ -1,0 +1,50 @@
+<DOCTTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <script>
+        document.write("<p><i>\"If I had nine hours to chop down a tree, I'd spend the first six sharpening my ax.\"</p></i>" + "<p><i>-- Abraham Lincoln</p></i>");
+
+        function repeatingText(text) {      
+            for (var i = 1; i <=50; i++){
+                document.write(text + "<br>")
+            }
+        }
+
+        function mikaselain() {
+            let userAgent = navigator.userAgent;
+            if (userAgent.includes("Firefox")){
+                window.location.href = "http://www.mozilla.org";
+            } else {
+                window.location.href = "https://www.youtube.com";
+            }
+        }
+        
+        let student = confirm("Are you a student?")
+        if (student) {
+            document.write("Welcome student");
+        } else {
+            document.write("Sorry, this page is for students only")
+        } 
+
+        var images =[
+            "http://farm4.staticflickr.com/3691/11268502654_f28f05966c_m.jpg",
+            "http://farm1.staticflickr.com/33/45336904_1aef569b30_n.jpg",
+            "http://farm6.staticflickr.com/5211/5384592886_80a512e2c9.jpg"
+        ];
+        document.write('<img src="' + images[0] + '" alt="Image">');
+
+        function randomImage(){
+            var random = Math.floor(Math.random() * images.length);
+            document.write('<img src="' + images[random] + '"alt="random image">')
+        }
+
+    </script>
+<br>
+<button onclick="repeatingText('Teksti')">Teksti x 50</button>
+<button onclick="mikaselain()">Check Browser</button>
+<button onclick="randomImage()">Show Another Image</button>
+</body>
+</html>
