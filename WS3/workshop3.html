@@ -50,11 +50,76 @@
                     </table>
                 `);
             }
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(success, error);
+                } else {
+                    document.getElementById("Location").innerHTML = "Ei toimi";
+                }
+            }
+            function success(position) {
+                document.getElementById("Location").innerHTML = "Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+            }
+            function error() {
+                alert("Ei toimi");
+            }
     </script>
+    <h2>Exercise 1</h2>
     <p>
           <button onclick="showAlert()">Click me</button>
           <button onclick="showTable()">Show table</button>
-          <button onclick="Geolocation()">Geolocation</button>
+          <button onclick="getLocation()">Geolocation</button>
     </p>
+    <p id="Location"></p>
+    <h2 id="heading2" style="width:200px; height:100px; border:2px solid black;"> Exercise 2</h2>
+    <script>
+            //2.
+            document.getElementById("heading2").addEventListener("mouseover", mouseOver);
+            document.getElementById("heading2").addEventListener("mouseout", mouseOut);
+
+            function mouseOver() {
+                console.log("Stepped over my a mouse!");
+            }
+            function mouseOut() {
+                alert ("Bye bye mouse!");
+            }
+    </script>
+    <h2>Exercise 3</h2>
+    <form id="form">
+        <textarea id="textdata"></textarea><br>
+        <span id="charcount"></span>
+        <button>Send me</button>
+    </form>
+    <script>
+        const textarea = document.getElementById("textdata");
+        const charCount = document.getElementById("charcount");
+        let keyPressCount = 0;
+
+        textarea.onfocus = function() {
+            textarea.value = "Please fill in the form with proper data"
+            textarea.style.backgroundColor = "#653487";
+        }
+        textarea.onkeydown = function() {
+            keyPressCount++;
+            charCount.textContent = "Keypresses: " + keyPressCount;
+        }
+        document.getElementById("form").onsubmit = function(event) {
+            if (textarea.value.trim() === "" || textarea.value === "Please fill in the form with proper data.") {
+            alert("Textarea cannot be empty! Please enter some text.");
+            event.preventDefault();
+        }
+        }
+    </script>
+    <h2 id="coords">Exercise 4</h2>
+    <div id="coordinates" style="width:100px; height:100px; border:2px solid black;">
+        Hiiri tähän </div>
+    <script>
+        document.getElementById("coordinates").onmousemove = function() {
+            const x = event.clientX;
+            const y = event.clientY;
+            console.log("X:",x,"Y:",y);
+            document.getElementById("coords").innerHTML = "Koordinaatit: X=" + x + ", Y=" +y;
+        }
+    </script>
 </body>
 </html>
