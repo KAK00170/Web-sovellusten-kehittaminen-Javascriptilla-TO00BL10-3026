@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Workshop4</title>
+    </head>
+    <body>
+        <h1 id="workshopHeading">Workshop 4: DOM Scripting</h1>
+        <h2 id="exerciseHeading">Exercise 1: Basic  DOM Manipulation</h2>
+
+        <p>
+		  <button onclick="changeHeading();">Button 1</button>
+		  <button onclick="secondButton()">Button 2</button>
+		  <button onclick="LoremIpsum()">Button 3</button>
+		</p>
+        <br>
+        <p></p>
+        <p></p>
+        <p></p>
+        <script>
+            //Button 1
+            function changeHeading() {
+                document.getElementById("workshopHeading").innerText = "Modified Heading!";
+            }
+            //Button 2
+            function secondButton() {
+                let heading = document.getElementById("exerciseHeading");
+                heading.style.fontSize = "40px";
+                heading.style.fontStyle = "italic";
+                heading.style.color = "red";
+                heading.style.backgroundColor = "green";
+            }
+            //Button 3
+            function LoremIpsum() {
+                let paragraphs = document.getElementsByTagName("p");
+                if (paragraphs.length >= 4) {
+                    let newPara = document.createElement("p");
+                    newPara.innerHTML = `<em>"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit."</em>
+                    <br>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Cel_icon_m-star.png"
+                    alt="Logo" width="60">`;
+                    paragraphs[3].after(newPara);
+                }
+                document.body.style.backgroundColor = "#f1a948";
+            }
+        </script>
+        <h2>Exercise 2: DOM Traversing using ID's and classes</h2>
+        <p class="surprise">Add onchange -events to following checkboxes.</p>
+        <p>
+			<label>
+				<input onchange="hide()" name="CheckboxGroup1" type="checkbox" id="CheckboxGroup1_0" title="Actions" value="1">
+				Hide me (using hide()-function in html)
+			</label>
+			<br>
+			<label>
+				<input type="checkbox" name="CheckboxGroup1" value="2" id="CheckboxGroup1_1">
+				Show me (using dynamically added event listener)
+			</label>
+			<br>
+			<label>
+				<input type="checkbox" name="CheckboxGroup1" value="3" id="CheckboxGroup1_2"> 
+				<span id="surprise">Surprise</span>
+			</label>
+		</p>
+        <div id="me" class="red-box">Hide this content!</div>
+        <script>
+            //1
+            function hide() {
+                const el = document.getElementById("me")
+                el.style.display = "none"
+            }
+            //2
+            const showCheckbox = document.getElementById("CheckboxGroup1_1");
+            showCheckbox.addEventListener("change", function() {
+                const el = document.getElementById("me");
+                if (this.checked) {
+                    el.style.display = "block";
+                }
+            });
+            //3
+            const surpriseCheckbox = document.getElementById("CheckboxGroup1_2");
+            surpriseCheckbox.addEventListener("change", function() {
+                const elements = document.getElementsByClassName("surprise");
+                for (let i = 0; i < elements.length; i++) {
+                    elements[i].style.fontSize = this.checked ? "20px" : "inherit";
+                }
+            });
+        </script>
+        <h2>Exercise 3: Images and pulldowns</h2>
+        <p>Select a new car from the list.</p>
+		  <select name="mySelect" id="mySelect" onchange="carChange()">
+			<option value="BMW">BMW         
+			<option value="Audi">Audi
+			<option value="Mercedes">Mercedes
+			<option value="Volvo">Volvo
+		  </select>
+		<br>
+        <img alt="" onmouseover="addBorder()" onmouseout="removeBorder()" style="position: relative; opacity: 1;" src="https://www.bmw.fi/content/dam/bmw/common/all-models/m-series/m8-coupe/2022/navigation/bmw-8series-coupe-modellfinder.png" width="400" id="carimage"/>
+        <script>
+            function carChange() {
+                const select = document.getElementById('mySelect');
+                const choice = select.value;
+                alert("You chose: " + choice);
+
+                const carImage = document.getElementById('carimage');
+
+                switch(choice) {
+                    case 'BMW':
+                        carImage.src = "https://www.bmw.fi/content/dam/bmw/common/all-models/m-series/m8-coupe/2022/navigation/bmw-8series-coupe-modellfinder.png";
+                        break;
+                    case 'Audi':
+                        carImage.src = "https://mediaservice.audi.com/media/fast/H4sIAAAAAAAAAFvzloG1tIiBOTrayfuvpGh6-m1zJgaGigIGBgZGoDhTtNOaz-I_2DhCHsCEtzEwF-SlMwJZKUycmbmJ6an6QD4_I3taTmV-aUkxO0grz5x432LHxE3WfU0dkTsecZz-O6OhjoEVqItxFZBgXgIk-LYDCU5XBjAJMm8NiKgE8ZmsmRkYWCuAjEgGEODjKy3KKUgsSszVK89MKckQ1DAgEgizu7iGOHr6BAMAYiN-0OkAAAA";
+                        break;
+                    case 'Mercedes':
+                        carImage.src = "https://upload.wikimedia.org/wikipedia/commons/f/fd/Mercedes-Benz_W214_1X7A1841.jpg";
+                        break;
+                    case 'Volvo':
+                        carImage.src = "https://koneporssi.com/wp-content/uploads/assets/files/90308/volvo_xc90_inscription_t8.jpg";
+                        break;
+                }
+            }
+            function addBorder() {
+                document.getElementById('carimage').style.border = "5px solid #a032a8";
+            }
+            function removeBorder() {
+                document.getElementById('carimage').style.border = "none";
+            }
+        </script>
+        <h2>Exercise 4: Moving things around</h2>
+		<ul>
+		  <li>
+			<p class="surprise">You can do neat things by editing CSS-rules via  JavaScript. See the examples in lecture slides. Then try these:</p>
+			<ol>
+			  <li><button onclick="changePosition()">Move!</button></li>
+			  <li><button onclick="setInterval(function(){doMove();},1000); ">Animate</button></li>
+			  <li><button onclick="fadeInterval = setInterval (fadeOut,250);">Fade out!</button></li>
+			  <li><button onclick="remove()">Disappear! </button></li>
+			</ol>
+		  </li>
+		</ul>
+        <script>
+            let animDirection = 1; 
+            let animPosition = 0;
+            let animInterval;
+            let fadeInterval;
+
+            //1
+            function changePosition() {
+                const img = document.getElementById('carimage');
+                img.style.left = '200px';
+                img.style.top = '500px';
+            }
+            //2
+            function doMove () {
+                const img = document.getElementById('carimage');
+                animPosition += 50 * animDirection;
+                img.style.left = animPosition + 'px';
+            }
+            //3
+            function fadeOut() {
+                const img = document.getElementById('carimage');
+                let opacity = parseFloat(img.style.opacity) || 1.0;
+                opacity -= 0.05;
+                if (opacity <= 0) {
+                    opacity = 0;
+                    clearInterval(fadeInterval);
+                }
+                img.style.opacity = opacity;
+            }
+            //4
+            function remove() {
+                const img = document.getElementById('carimage');
+                if(img) {
+                    img.remove();
+                }
+            }
+            
+        </script>
+        <h2>Exercise 5: Tables</h2>
+		<table id="data" class="display">
+			<thead>
+			  <tr>
+				<th>Name</th>
+				<th>Position</th>
+				<th>Salary</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr>
+				<td>Tiger Nixon</td>
+				<td>System Architect</td>
+				<td>$320,800</td>
+			  </tr>
+			  <tr>
+				<td>Garrett Winters</td>
+				<td>Accountant</td>
+				<td>$170,750</td>
+			  </tr>
+			  <tr>
+				<td>Ashton Cox</td>
+				<td>Junior Technical Author</td>
+				<td>$86,000</td>
+			  </tr>
+			  <tr>
+				<td>Cedric Kelly</td>
+				<td>Senior Javascript Developer</td>
+				<td>$433,060</td>
+			  </tr>
+			  <tr>
+				<td>Airi Satou</td>
+				<td>Accountant</td>
+				<td>$162,700</td>
+			  </tr>
+			</tbody>
+			<tfoot>
+			</tfoot>
+		</table>
+		<p>
+			Name
+			<label for="textfield">:</label>
+			<input type="text" name="textfield" id="textfield">
+			<br>
+			Position:
+			<input type="text" name="textfield2" id="textfield2">
+			<br>
+			Salary: 
+			<input type="text" name="textfield3" id="textfield3">
+			<br>
+			<input type="button" onclick="insertRows()" name="Insert" id="Insert" value="Insert">
+		</p>
+        <script>
+            //1 
+            function insertRows() {
+                const table = document.getElementById('data').getElementsByTagName('tbody')[0];
+
+                const name = document.getElementById('textfield').value;
+                const position = document.getElementById('textfield2').value;
+                const salary = document.getElementById('textfield3').value;
+
+                const newRow = table.insertRow();
+
+                const cell1 = newRow.insertCell(0);
+                const cell2 = newRow.insertCell(1);
+                const cell3 = newRow.insertCell(2);
+
+                cell1.textContent = name;
+                cell2.textContent = position;
+                cell3.textContent = salary;
+            }
+        </script>
+    </body>
+</html>
